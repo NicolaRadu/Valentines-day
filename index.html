@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine's Day</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* --- GLOBAL STYLES --- */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #2E1A36;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .garden {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            background: #2E1A36;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* --- TITLE --- */
+        .title {
+            position: absolute;
+            top: 50px;
+            width: 100%;
+            text-align: center;
+            font-size: 72px;
+            color: #DCD0FF;
+            text-shadow: 0 0 15px rgba(180, 130, 220, 0.8);
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        /* --- FLOWER WRAPPER LOGIC --- */
+        .rose-wrapper {
+            width: 100px;
+            height: 500px;
+            position: absolute;
+            transform-origin: bottom center;
+            transition: all 0.5s ease;
+            bottom: -50px;
+            pointer-events: none; 
+        }
+
+        .rose-wrapper div, .rose-wrapper svg {
+            position: absolute;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes swayingCenter {
+            0%, 100% { transform: scale(0.95) rotate(-1deg); }
+            50% { transform: scale(0.95) rotate(1deg); }
+        }
+        @keyframes swayingMidLeft {
+            0%, 100% { transform: scale(0.92) rotate(-6deg); }
+            50% { transform: scale(0.92) rotate(-9deg); }
+        }
+        @keyframes swayingMidRight {
+            0%, 100% { transform: scale(0.92) rotate(6deg); }
+            50% { transform: scale(0.92) rotate(9deg); }
+        }
+        @keyframes swayingFarLeft {
+            0%, 100% { transform: scale(0.85) rotate(-13deg); }
+            50% { transform: scale(0.85) rotate(-18deg); }
+        }
+        @keyframes swayingFarRight {
+            0%, 100% { transform: scale(0.85) rotate(15deg); }
+            50% { transform: scale(0.85) rotate(18deg); }
+        }
+
+        /* --- BOUQUET POSITIONS & LAYERING --- */
+        .rose-wrapper.center { left: 50%; margin-left: -50px; z-index: 10; animation: swayingCenter 5s ease-in-out infinite; }
+        .rose-wrapper.mid-left { left: 50%; margin-left: -50px; z-index: 8; animation: swayingMidLeft 6s ease-in-out infinite; }
+        .rose-wrapper.mid-right { left: 50%; margin-left: -50px; z-index: 8; animation: swayingMidRight 5.5s ease-in-out infinite; }
+        .rose-wrapper.far-left { left: 50%; margin-left: -50px; z-index: 6; animation: swayingFarLeft 7s ease-in-out infinite; }
+        .rose-wrapper.far-right { left: 50%; margin-left: -50px; z-index: 6; animation: swayingFarRight 6.5s ease-in-out infinite; }
+
+        /* --- STEMS & LEAVES --- */
+        .rose-wrapper .rose-leaves > div:nth-child(1) { width: 8px; border: none; top: 150px; background: #066406; left: 46px; border-radius: 4px; z-index: 1; }
+        .rose-wrapper.center .rose-leaves > div:nth-child(1) { height: 300px; }
+        .rose-wrapper.mid-left .rose-leaves > div:nth-child(1), .rose-wrapper.mid-right .rose-leaves > div:nth-child(1) { height: 315px; top: 155px; }
+        .rose-wrapper.far-left .rose-leaves > div:nth-child(1), .rose-wrapper.far-right .rose-leaves > div:nth-child(1) { height: 340px; top: 140px; }
+
+        .rose-wrapper .rose-leaves > div:nth-child(2) { width: 55px; height: 30px; background: #28722c; top: 200px; left: 15px; border-radius: 100px; z-index: 5; }
+        .rose-wrapper .stem-leaf { width: 45px; height: 25px; background: #28722c; top: 280px; left: 50px; border-radius: 0 70% 0 70%; transform: rotate(-20deg); z-index: 4; box-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
+
+        /* --- FLOWER HEADS --- */
+        .lilac-svg { width: 230px; height: auto; top: 40px; left: -65px; z-index: 12; filter: drop-shadow(0 5px 5px rgba(46, 26, 54, 0.6)); animation: internalPulse 4s ease-in-out infinite alternate; }
+        @keyframes internalPulse { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
+
+        /* --- SVG COLORS --- */
+        .lilac-dark { fill: #7A507D; } .lilac-med { fill: #9E76A0; } .lilac-light { fill: #B68CB8; } .lilac-highlight { fill: #DCD0FF; }
+        
+        /* --- SPARKLES --- */
+        .rose-wrapper .sparkles { bottom: 250px; width: 100%; pointer-events: none; z-index: 20; }
+        .rose-wrapper .sparkles > div { width: 3px; height: 3px; border-radius: 100px; background: #E6E6FA; box-shadow: 0px 0px 10px 1px #C49CBD; bottom: 0; opacity: 0; animation: sparkle 5s ease-in-out infinite; }
+        .sparkles > div:nth-child(1) { left: 20px; animation-delay: 1s; } .sparkles > div:nth-child(2) { left: 60px; animation-delay: 3s; } .sparkles > div:nth-child(3) { left: 40px; animation-delay: 2s; } .sparkles > div:nth-child(4) { left: 80px; animation-delay: 4s; }
+        @keyframes sparkle { 50% { opacity: 0.8; } 100% { bottom: 200px; opacity: 0;} }
+
+        /* --- RIBBON --- */
+        .ribbon-bow { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 30; }
+        .ribbon-knot { width: 25px; height: 25px; background: #9B6B9E; border-radius: 6px; z-index: 2; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        .ribbon-loops { position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 130px; height: 40px; z-index: 1; }
+        .ribbon-loops:before, .ribbon-loops:after { content: ''; position: absolute; width: 55px; height: 40px; background: #8A5A8D; border-radius: 30px 10px 10px 30px; }
+        .ribbon-loops:before { left: 0; transform: skewX(-10deg); } .ribbon-loops:after { right: 0; transform: scaleX(-1) skewX(-10deg); }
+
+        /* --- MOBILE --- */
+        @media screen and (max-width: 600px) { .garden { transform: scale(0.7); margin-top: 20px; } .title { font-size: 45px; top: 30px; } .rose-wrapper { bottom: -80px; } .ribbon-bow { bottom: 0px; } }
+    </style>
+</head>
+<body>
+
+    <div class="garden">
+        <h1 class="title">Happy Valentines Day! ✨</h1>
+        
+        <svg style="display: none;">
+            <symbol id="lilac-cluster" viewBox="0 0 200 300">
+                <g class="lilac-dark">
+                    <circle cx="100" cy="280" r="16"/><circle cx="85" cy="270" r="15"/><circle cx="115" cy="270" r="15"/>
+                    <circle cx="70" cy="250" r="14"/><circle cx="130" cy="250" r="14"/><circle cx="100" cy="245" r="16"/>
+                    <circle cx="60" cy="225" r="14"/><circle cx="140" cy="225" r="14"/><circle cx="85" cy="220" r="15"/><circle cx="115" cy="220" r="15"/>
+                    <circle cx="50" cy="195" r="13"/><circle cx="150" cy="195" r="13"/><circle cx="75" cy="190" r="14"/><circle cx="125" cy="190" r="14"/><circle cx="100" cy="185" r="16"/>
+                    <circle cx="55" cy="160" r="13"/><circle cx="145" cy="160" r="13"/><circle cx="90" cy="155" r="15"/><circle cx="110" cy="155" r="15"/>
+                    <circle cx="65" cy="130" r="13"/><circle cx="135" cy="130" r="13"/><circle cx="100" cy="125" r="15"/>
+                    <circle cx="75" cy="100" r="12"/><circle cx="125" cy="100" r="12"/><circle cx="100" cy="95" r="14"/>
+                    <circle cx="85" cy="75" r="12"/><circle cx="115" cy="75" r="12"/>
+                    <circle cx="100" cy="55" r="13"/></g>
+                <g class="lilac-med">
+                    <circle cx="95" cy="275" r="12"/><circle cx="105" cy="275" r="12"/>
+                    <circle cx="80" cy="260" r="11"/><circle cx="120" cy="260" r="11"/><circle cx="100" cy="255" r="13"/>
+                    <circle cx="65" cy="235" r="11"/><circle cx="135" cy="235" r="11"/><circle cx="90" cy="230" r="12"/><circle cx="110" cy="230" r="12"/>
+                    <circle cx="55" cy="205" r="10"/><circle cx="145" cy="205" r="10"/><circle cx="75" cy="200" r="11"/><circle cx="125" cy="200" r="11"/><circle cx="100" cy="195" r="13"/>
+                    <circle cx="60" cy="175" r="10"/><circle cx="140" cy="175" r="10"/><circle cx="85" cy="170" r="11"/><circle cx="115" cy="170" r="11"/>
+                    <circle cx="70" cy="145" r="10"/><circle cx="130" cy="145" r="10"/><circle cx="100" cy="140" r="12"/>
+                    <circle cx="80" cy="115" r="11"/><circle cx="120" cy="115" r="11"/>
+                    <circle cx="90" cy="90" r="11"/><circle cx="110" cy="90" r="11"/>
+                    <circle cx="100" cy="70" r="12"/>
+                    <circle cx="100" cy="50" r="10"/>
+                </g>
+                <g class="lilac-light">
+                    <circle cx="100" cy="265" r="10"/><circle cx="90" cy="255" r="9"/><circle cx="110" cy="255" r="9"/>
+                    <circle cx="80" cy="240" r="9"/><circle cx="120" cy="240" r="9"/><circle cx="100" cy="235" r="10"/>
+                    <circle cx="70" cy="220" r="9"/><circle cx="130" cy="220" r="9"/><circle cx="90" cy="215" r="10"/><circle cx="110" cy="215" r="10"/>
+                    <circle cx="60" cy="195" r="8"/><circle cx="140" cy="195" r="8"/><circle cx="80" cy="190" r="9"/><circle cx="120" cy="190" r="9"/><circle cx="100" cy="185" r="10"/>
+                    <circle cx="70" cy="165" r="9"/><circle cx="130" cy="165" r="9"/><circle cx="95" cy="160" r="10"/><circle cx="105" cy="160" r="10"/>
+                    <circle cx="85" cy="135" r="9"/><circle cx="115" cy="135" r="9"/><circle cx="100" cy="130" r="10"/>
+                    <circle cx="95" cy="110" r="9"/><circle cx="105" cy="110" r="9"/>
+                    <circle cx="100" cy="90" r="10"/>
+                    <circle cx="100" cy="70" r="9"/>
+                    <circle cx="95" cy="55" r="8"/><circle cx="105" cy="55" r="8"/>
+                    <circle cx="100" cy="40" r="7"/>
+                </g>
+                <g class="lilac-highlight">
+                    <circle cx="100" cy="265" r="4"/><circle cx="90" cy="255" r="3"/><circle cx="110" cy="255" r="3"/>
+                    <circle cx="80" cy="240" r="3"/><circle cx="120" cy="240" r="3"/><circle cx="100" cy="235" r="4"/>
+                    <circle cx="70" cy="220" r="3"/><circle cx="130" cy="220" r="3"/><circle cx="90" cy="215" r="4"/><circle cx="110" cy="215" r="4"/>
+                    <circle cx="60" cy="195" r="3"/><circle cx="140" cy="195" r="3"/><circle cx="80" cy="190" r="3"/><circle cx="120" cy="190" r="3"/><circle cx="100" cy="185" r="4"/>
+                    <circle cx="70" cy="165" r="3"/><circle cx="130" cy="165" r="3"/><circle cx="95" cy="160" r="4"/><circle cx="105" cy="160" r="4"/>
+                    <circle cx="85" cy="135" r="3"/><circle cx="115" cy="135" r="3"/><circle cx="100" cy="130" r="4"/>
+                    <circle cx="95" cy="110" r="3"/><circle cx="105" cy="110" r="3"/>
+                    <circle cx="100" cy="90" r="4"/>
+                    <circle cx="100" cy="70" r="3"/>
+                    <circle cx="95" cy="55" r="3"/><circle cx="105" cy="55" r="3"/>
+                    <circle cx="100" cy="40" r="2"/>
+                </g>
+            </symbol>
+        </svg>
+
+        <div class="rose-wrapper far-left">
+            <div class="rose-leaves"><div></div></div>
+            <svg class="lilac-svg" style="transform: scale(0.8);"><use href="#lilac-cluster"/></svg>
+        </div>
+        <div class="rose-wrapper far-right">
+            <div class="rose-leaves"><div></div></div>
+            <svg class="lilac-svg" style="transform: scale(0.8);"><use href="#lilac-cluster"/></svg>
+        </div>
+
+        <div class="rose-wrapper mid-left">
+            <div class="rose-leaves"><div></div><div></div><div class="stem-leaf"></div></div>
+            <svg class="lilac-svg"><use href="#lilac-cluster"/></svg>
+            <div class="sparkles"><div></div><div></div></div>
+        </div>
+        <div class="rose-wrapper mid-right">
+            <div class="rose-leaves"><div></div><div></div><div class="stem-leaf"></div></div>
+            <svg class="lilac-svg"><use href="#lilac-cluster"/></svg>
+            <div class="sparkles"><div></div><div></div></div>
+        </div>
+
+        <div class="rose-wrapper center">
+            <div class="rose-leaves"><div></div><div></div><div class="stem-leaf"></div></div>
+            <svg class="lilac-svg"><use href="#lilac-cluster"/></svg>
+            <div class="sparkles"><div></div><div></div><div></div><div></div></div>
+        </div>
+
+        <div class="rose-wrapper mid-left" style="z-index: 9; animation-delay: -1s; transform: scale(0.9) translateY(10px);">
+            <svg class="lilac-svg"><use href="#lilac-cluster"/></svg>
+        </div>
+        <div class="rose-wrapper mid-right" style="z-index: 9; animation-delay: -2.5s; transform: scale(0.9) translateY(10px);">
+            <svg class="lilac-svg"><use href="#lilac-cluster"/></svg>
+        </div>
+
+        <div class="ribbon-bow">
+            <div class="ribbon-knot"></div>
+            <div class="ribbon-loops"></div>
+        </div>
+    </div>
+
+</body>
+</html>
